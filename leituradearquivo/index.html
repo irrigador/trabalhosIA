@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+            .container {
+        max-width: 500px;
+        height: auto;
+        margin: 0 auto;
+        text-align: center;
+      }
+      
+      h1 {
+        font-size: 36px;
+        color: #333;
+        margin-top: 50px;
+      }
+      
+      input[type="text"], input[type="password"] {
+        width: 100%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        box-sizing: border-box;
+        border: 2px solid #ccc;
+        border-radius: 4px;
+        font-size: 18px;
+      }
+      
+      button#submit-button {
+        width: 100%;
+        padding: 14px 20px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      
+      @media (max-width: 500px) {
+        .container {
+          width: 90%;
+        }
+        
+        h1 {
+          font-size: 24px;
+        }
+        
+        input[type="text"], input[type="password"] {
+          font-size: 16px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Login Page</h1>
+      <input type="text" id="username" placeholder="Username">
+      <input type="password" id="password" placeholder="Password">
+      <button id="submit-button">Submit</button>
+    </div>
+    
+    <script>
+      const submitButton = document.getElementById("submit-button");
+      const username = document.getElementById("username");
+      const password = document.getElementById("password");
+      
+      submitButton.addEventListener("click", function() {
+        if (username.value === "admin" && password.value === "admin") {
+          window.location.href = "hello.html";
+        } else {
+          alert("Incorrect username or password");
+        }
+      });
+    </script>
+  </body>
+</html>

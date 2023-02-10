@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Árvore de Decisão</title>
+    <style>
+<style>
+        /* CSS para estilizar a interface */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+        header {
+            background-color: #2196f3;
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+        }
+        h1 {
+            margin: 0;
+        }
+        #decision-tree {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 2px 2px 4px #ccc;
+            border-radius: 5px;
+        }
+        /* Adicionando acessibilidade para usuários com deficiência visual */
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #333;
+        }
+
+input[type=radio], button {
+padding: 10px;
+margin-right: 10px;
+font-size: 18px;
+cursor: pointer;
+}
+/ Adicionando estilização para a caixa de decisão /
+#decision-tree {
+border: 1px solid #ccc;
+padding: 20px;
+margin-bottom: 20px;
+background-color: #fff;
+box-shadow: 2px 2px 4px #ccc;
+border-radius: 5px;
+}
+/ Adicionando estilização para a saída de decisão /
+#output {
+margin-top: 20px;
+font-weight: bold;
+font-size: 18px;
+padding: 10px;
+background-color: #e1f5fe;
+border-radius: 5px;
+box-shadow: 2px 2px 4px #ccc;
+}
+/ Adicionando estilização para o botão de submissão /
+button[type="submit"] {
+background-color: #4caf50;
+color: #fff;
+border-radius: 5px;
+cursor: pointer;
+}
+/ Adicionando estilização para o botão de salvar /
+button[id="save-decision"] {
+background-color: #2196f3;
+color: #fff;
+border-radius: 5px;
+cursor: pointer;
+float: right;
+}
+/ Adicionando estilização para o botão de submissão quando pressionado /
+button[type="submit"]:active, button[id="save-decision"]:active {
+background-color: #3e8e41;
+}
+/ Adicionando estilização para o botão de submissão quando desativado */
+button[type="submit"]:disabled, button[id="save-decision"]:disabled {
+background-color: #ccc;
+}
+
+            
+/* Utilizando media queries para adaptar o layout de acordo com o tamanho da tela */
+@media screen and (max-width: 600px) {
+    #decision-tree {
+        flex-direction: column;
+    }
+
+    #output {
+        margin-top: 10px;
+    }
+}
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <h1>Árvore de Decisão</h1>
+        </nav>
+    </header>
+    <main>
+        <div id="decision-tree">
+            <form id="decision-form">
+                <div>
+                    <label>Você está com sede?</label>
+                    <div>
+                        <input type="radio" id="yes-thirst" name="thirst" value="yes">
+                        <label for="yes-thirst">Sim</label>
+                        <input type="radio" id="no-thirst" name="thirst" value="no">
+                        <label for="no-thirst">Não</label>
+                    </div>
+                    </div>
+                    <div>
+                    <label>Você está com fome?</label>
+                    <div>
+                    <input type="radio" id="yes-hunger" name="hunger" value="yes">
+                    <label for="yes-hunger">Sim</label>
+                    <input type="radio" id="no-hunger" name="hunger" value="no">
+                    <label for="no-hunger">Não</label>
+                    </div>
+                    </div>
+                    <button type="submit">Tomar decisão</button>
+                    <button id="save-decision" type="button">Salvar Decisão</button>
+                    <div id="output"></div>
+                    </form>
+                    </div>
+                    </main>
+    <script>
+          // JavaScript para seguir a árvore de decisão e exibir a decisão final
+          const decisionForm = document.querySelector("#decision-form");
+        const output = document.querySelector("#output");
+        const saveDecisionBtn = document.querySelector("#save-decision");
+        const thirstSelection = document.querySelector("input[name='thirst']");
+        const hungerSelection = document.querySelector("input[name='hunger']");
+        
+        decisionForm.addEventListener("submit", makeDecision);
+        saveDecisionBtn.addEventListener("click", saveDecision);
+        // listener para habilitar o botão de salvar
+        hungerSelection.addEventListener("change", ()=>{
+            saveDecisionBtn.disabled = false;
+        });
+        thirstSelection.addEventListener("change", ()=>{
+            saveDecisionBtn.disabled = false;
+        });
+        // função para tomar decisão
+        function makeDecision(e) {
+            e.preventDefault();
+            const thirst = thirstSelection.value;
+            const hunger = hungerSelection.value;
+            let decision = "";
+            if (thirst === "yes" && hunger === "yes") {
+                decision = "Vá comer e beber algo.";
+            } else if (thirst === "yes" && hunger === "no") {
+                decision = "Vá beber algo.";
+            } else if (thirst === "no" && hunger === "yes") {
+                decision = "Vá comer algo.";
+            } else {
+                decision = "Você não precisa fazer nada no momento.";
+            }
+            output.innerText = "Decisão: " + decision;
+        }
+        // função para salvar decisão
+        function saveDecision() {
+            let decision = output.innerText;
+            let file = new Blob([decision], {type: 'text/plain'});
+            let a = document.createElement('a');
+            a.href = URL.createObjectURL(file);
+            a.download = "decision.txt";
+            a.click();
+        }
+</script>
+
+</body>
+</html> 
