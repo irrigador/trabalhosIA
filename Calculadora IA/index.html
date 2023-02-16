@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Calculadora</title>
+    <style>
+      /* CSS interno */
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f5f5f5;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+      
+      .calculator {
+        border: 2px solid #ddd;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        background-color: #fff;
+        padding: 20px;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-gap: 10px;
+      }
+      
+      .calculator input[type="button"] {
+        border: none;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        background-color: #f5f5f5;
+        font-size: 1.2rem;
+        padding: 10px;
+        cursor: pointer;
+      }
+      
+      .calculator input[type="button"]:active {
+        background-color: #ddd;
+      }
+      
+      .calculator input[type="text"] {
+        grid-column: 1 / span 4;
+        border: none;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        font-size: 2rem;
+        padding: 10px;
+        text-align: right;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="calculator">
+      <input type="text" id="result" value="0" readonly />
+      <input type="button" value="C" onclick="clearResult()" />
+      <input type="button" value="/" onclick="updateResult('/')" />
+      <input type="button" value="*" onclick="updateResult('*')" />
+      <input type="button" value="-" onclick="updateResult('-')" />
+      <input type="button" value="7" onclick="updateResult('7')" />
+      <input type="button" value="8" onclick="updateResult('8')" />
+      <input type="button" value="9" onclick="updateResult('9')" />
+      <input type="button" value="+" onclick="updateResult('+')" />
+      <input type="button" value="6" onclick="updateResult('6')" />
+      <input type="button" value="5" onclick="updateResult('5')" />
+      <input type="button" value="4" onclick="updateResult('4')" />
+      <input type="button" value="=" onclick="calculateResult()" />
+      <input type="button" value="1" onclick="updateResult('1')" />
+      <input type="button" value="2" onclick="updateResult('2')" />
+      <input type="button" value="3" onclick="updateResult(3)" />
+    </div>
+    <script>
+      // JavaScript interno
+      let result = document.getElementById("result");
+
+      function clearResult() {
+        result.value = "0";
+      }
+
+      function updateResult(value) {
+        if (result.value === "0") {
+          result.value = value;
+        } else {
+          result.value += value;
+}
+}
+function calculateResult() {
+    result.value = eval(result.value);
+  }
+</script>
+  </body>
+</html>
