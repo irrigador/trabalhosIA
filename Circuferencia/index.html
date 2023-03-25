@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Circunferência em JavaScript</title>
+  <script>
+    function desenharCircunferencia() {
+      var canvas = document.getElementById("myCanvas");
+      var ctx = canvas.getContext("2d");
+      var raio = 100; // Definir o raio da circunferência
+      var centroX = canvas.width / 2; // Definir a coordenada X do centro da circunferência
+      var centroY = canvas.height / 2; // Definir a coordenada Y do centro da circunferência
+
+      ctx.beginPath();
+      ctx.strokeStyle = "black"; // Definir a cor da linha da circunferência
+      for (var i = 0; i < 360; i++) {
+        var angulo = i * Math.PI / 180; // Converter o ângulo para radianos
+        var x = centroX + raio * Math.cos(angulo); // Calcular a coordenada X do ponto na circunferência
+        var y = centroY + raio * Math.sin(angulo); // Calcular a coordenada Y do ponto na circunferência
+        if (i == 0) {
+          ctx.moveTo(x, y); // Definir o ponto inicial do caminho
+        } else {
+          ctx.lineTo(x, y); // Desenhar uma linha até o próximo ponto na circunferência
+        }
+      }
+      ctx.closePath();
+      ctx.stroke();
+    }
+  </script>
+</head>
+<body onload="desenharCircunferencia();">
+  <canvas id="myCanvas" width="400" height="400"></canvas>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Exemplo de função em JavaScript</h2>
+
+<p>Clique no botão para chamar a função e exibir a soma de dois números.</p>
+
+<button onclick="exibirSoma()">Clique aqui</button>
+
+<p id="resultado"></p>
+
+<script>
+function soma(a, b) {
+  return a + b;
+}
+
+function exibirSoma() {
+  var num1 = 2;
+  var num2 = 3;
+  var resultado = soma(num1, num2);
+  document.getElementById("resultado").innerHTML = "A soma é " + resultado;
+}
+</script>
+
+</body>
+</html>
