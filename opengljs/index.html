@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>David Dangerous - Fase 1</title>
+	<style>
+		#canvas {
+			width: 100%;
+			height: 100%;
+		}
+		body {
+			margin: 0;
+			padding: 0;
+			background-color: #e9d9b0;
+		}
+	</style>
+</head>
+<body>
+	<canvas id="canvas"></canvas>
+<script src="https://threejs.org/build/three.min.js"></script>
+<script>
+	// Define as variáveis globais
+	var camera, scene, renderer;
+	var geometry, material, mesh, cube;
+	var raycaster, intersects;
+	var obstacles = [];
+	var obstacleCount = 5;
+	var obstacleWidth = 50;
+	var obstacleHeight = 50;
+	var davidSpeed = 5;
+	var david;
+	var score = 0;
+	var scoreText;
+	var gameOverText;
+
+	// Função para inicializar a cena
+	function init() {
+		// Cria a cena, a câmera e adiciona luz
+		scene = new THREE.Scene();
+		camera = new THREE.PerspectiveCamera( 75, window.innerWidth/window.innerHeight, 0.1, 1000 );
+		camera.position.z = 50;
+		var light = new THREE.AmbientLight( 0x404040 );
+		scene.add( light );
+
+		// Cria o chão
+		geometry = new THREE.PlaneGeometry( 200, 200, 32 );
+		material = new THREE.MeshBasicMaterial( {color: 0x00ff00, side: THREE.DoubleSide} );
+		mesh = new THREE.Mesh( geometry, material );
+		mesh.rotation.x = Math.PI / 2;
+		scene.add( mesh );
+
+		// Cria os obstáculos
+		for (var i = 0; i < obstacleCount; i++) {
+			var obstacleGeometry = new THREE.BoxGeometry(obstacleWidth, obstacleHeight, obstacleWidth);
+			var obstacleMaterial = new THREE.MeshBasicMaterial({color: 0xff0000});
+			var obstacleMesh = new THREE.Mesh(obstacleGeometry, obstacleMaterial);
+			obstacleMesh.position.x = (Math.random() - 0.5) * 150;
+			obstacleMesh.position.y = obstacleHeight / 2;
+			obstacleMesh.position.z = (Math.random() - 0.5) * 150;
+			scene.add(obstacleMesh);
+			obstacles.push(obstacleMesh);
+		}
+
+		// Cria o cubo vermelho representando David
+		var davidGeometry = new THREE.BoxGeometry(10, 10, 10);
+		var davidMaterial = new THREE.MeshBasicMaterial({color: 0xff0000});
+		david = new THREE.Mesh(davidGeometry, davidMaterial);
+		david.position.y = 5;
+		scene.add(david);
+
+		// Adiciona o texto da pontuação
+		var scoreGeometry = new THREE.TextGeometry('Score: ' + score, {
+			font: new THREE.Font( undefined ),
+			size: 10,
+			height: 5
+		});
+		var scoreMaterial = new THREE.MeshBasicMaterial( { color: 0xffffff } );
+		scoreText = new THREE.Mesh( scoreGeometry, scoreMaterial );
+		scoreText.position.y = 50;
+		scoreText.position.z = -100;
+		scene.add( scoreText );
+
+		// Adiciona o texto do game over
+		var gameOverGeometry = new THREE.TextGeometry('Game Over', {
+			font: new THREE.Font( undefined ),
+			size: 20,
+			height: 10
+		});
+		gameOverText = new THREE.Mesh( gameOverGeometry, scoreMaterial );
+		gameOverText.position.z = -100;
+		gameOverText.visible = false;
+		scene.add( gameOverText );
+
+		// Inicializa o renderer
+		renderer = new THREE.WebGLRenderer();
+		renderer.setSize( window.innerWidth, window.innerHeight );
+		document.body.appendChild( renderer.domElement );
+	}
+// Função para atualizar a posição de David
+function updateDavid() {
+	var keyboard = new THREEx.KeyboardState();
+
+	if (keyboard.pressed('left')) {
+		david.position.x -= davidSpeed;
+	}
+	if (keyboard.pressed('right')) {
+		david.position.x += davidSpeed;
+	}
+	if (keyboard.pressed('up')) {
+		david.position.z -= davidSpeed;
+	}
+	if (keyboard.pressed('down')) {
+		david.position.z += davidSpeed;
+	}
+}
+
+// Função para atualizar a pontuação e checar colisões
+function update() {
+	// Atualiza a pontuação
+	score++;
+	scoreText.geometry = new THREE.TextGeometry('Score: ' + score, {
+		font: new THREE.Font( undefined ),
+		size: 10,
+		height: 5
+	});
+
+	// Checa colisões
+	raycaster.set(david.position, new THREE.Vector3(0,-1,0));
+	intersects = raycaster.intersectObjects(obstacles);
+	if (intersects.length > 0) {
+		gameOverText.visible = true;
+		davidSpeed = 0;
+		return;
+	}
+}
+
+// Função para renderizar a cena
+function render() {
+	requestAnimationFrame(render);
+	updateDavid();
+	update();
+	renderer.render(scene, camera);
+}
+
+// Inicializa o jogo
+init();
+render();
+</script>
+</body>
+</html>

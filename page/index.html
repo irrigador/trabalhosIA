@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Gerador de Texto OpenAI</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<script src="https://cdn.jsdelivr.net/npm/@openai/openai-js@0.6.3/dist/openai.js"></script>
+	<script>
+		const openai = new OpenAI('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');
+
+		function generateText() {
+			const prompt = document.getElementById("prompt").value;
+			const model = document.getElementById("model").value;
+			const completions = openai.complete({
+				engine: model,
+				prompt: prompt,
+				maxTokens: 1024,
+				n: 1,
+				stop: ["\n"]
+			});
+			const textGerado = completions.choices[0].text;
+			document.getElementById("texto-gerado").textContent = textGerado;
+		}
+	</script>
+</head>
+<body>
+	<h1>Gerador de Texto OpenAI</h1>
+	<form>
+		<label for="prompt">Digite o prompt:</label>
+		<input type="text" id="prompt" name="prompt" placeholder="Digite aqui o prompt...">
+		<label for="model">Selecione o modelo:</label>
+		<select id="model" name="model">
+			<option value="davinci">Davinci</option>
+			<option value="curie">Curie</option>
+			<option value="babbage">Babbage</option>
+		</select>
+		<button type="button" onclick="generateText()">Gerar Texto</button>
+	</form>
+	<div id="texto-gerado"></div>
+</body>
+</html>

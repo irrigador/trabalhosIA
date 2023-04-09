@@ -14,12 +14,11 @@ submitButton.addEventListener("click", function(e) {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
-            "Authorization": "Bearer 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"
+            "Authorization": "Bearer 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"
         },
         body: JSON.stringify({
             prompt: question,
-            temperature: 0.5,
-            max_tokens: 150 // aumentando o tamanho da resposta
+            temperature: 0.5
         })
     })
     .then(response => response.json())
@@ -30,4 +29,4 @@ submitButton.addEventListener("click", function(e) {
     .catch(error => {
         console.error(error);
     });
-});
+}); 
