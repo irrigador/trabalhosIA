@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Agenda Eletrônica</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+	<div class="container">
+		<h1>Agenda Eletrônica</h1>
+		<form id="form">
+			<label for="nome">Nome:</label>
+			<input type="text" id="nome" name="nome" required>
+
+			<label for="data">Data:</label>
+			<input type="date" id="data" name="data" required>
+
+			<label for="hora">Hora:</label>
+			<input type="time" id="hora" name="hora" required>
+
+			<label for="descricao">Descrição:</label>
+			<textarea id="descricao" name="descricao"></textarea>
+
+			<button type="submit" id="btn-agendar">Agendar</button>
+		</form>
+		<div id="mensagem"></div>
+		<div id="evento"></div>
+	</div>
+
+	<script src="script.js"></script>
+</body>
+</html>
