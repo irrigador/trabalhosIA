@@ -1,0 +1,27 @@
+p {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: beige;
+}
+
+p.cl1 {
+    background-color: aqua;
+    border: 3px solid black;
+}
+
+p.cl2 {
+    background-color: white;
+    border: 3px dashed black;
+}
+
+p.cl3 {
+    border-width: 3px;
+    background-color: white;
+    border-style: dashed double dotted solid;
+}
+
+p.cl4 {
+    border-width: 3px;
+    background-color: white;
+    border-style: solid;
+    border-color: red violet blue green;
+}
