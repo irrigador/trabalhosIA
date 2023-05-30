@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora de Notas</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+    }
+	
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+   .form-group input[type="text"] {
+      width: 50%;
+      padding: 8px;
+      font-size: 16px;
+      display: block;
+    }
+
+    .btn-calcular {
+      display: block;
+      width: 50%;
+      padding: 10px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .resultados {
+      margin-top: 20px;
+      padding: 10px;
+      border: 1px solid #ddd;
+      background-color: #f5f5f5;
+    }
+
+    .resultados p {
+      margin: 5px 0;
+    }
+  </style>
+  <script>
+    function calcularNotas() {
+      var ingles = parseInt(document.getElementById("ingles").value);
+      var pe = parseInt(document.getElementById("pe").value);
+      var webI = parseInt(document.getElementById("webI").value);
+
+      var totalQuestoes = 10 + 15 + 15;
+      var notaIngles = (ingles / 10) * 10;
+      var notaPE = (pe / 15) * 10;
+      var notaWebI = (webI / 15) * 10;
+
+	document.getElementById("nota").textContent = "Notas: ";
+      document.getElementById("notaIngles").textContent = "Inglês: " + notaIngles.toFixed(2);
+      document.getElementById("notaPE").textContent = "PE: " + notaPE.toFixed(2);
+      document.getElementById("notaWebI").textContent = "Web I: " + notaWebI.toFixed(2);
+    }
+  </script>
+</head>
+<body>
+  <h1>Calculadora de Notas</h1>
+
+  <div class="form-group">
+    <label for="ingles">Questões de Inglês:</label>
+    <input type="text" id="ingles">
+  </div>
+
+  <div class="form-group">
+    <label for="pe">Questões de PE:</label>
+    <input type="text" id="pe">
+  </div>
+
+  <div class="form-group">
+    <label for="webI">Questões de Web I:</label>
+    <input type="text" id="webI">
+  </div>
+
+  <button class="btn-calcular" onclick="calcularNotas()">Calcular</button>
+
+  <div class="resultados">
+	<h1 id="nota"></h1>    
+	<p id="notaIngles"></p>
+    <p id="notaPE"></p>
+    <p id="notaWebI"></p>
+  </div>
+</body>
+</html>

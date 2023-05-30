@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Exemplo de Atualização, Edição, Exclusão e Mostragem de Informações</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+<link rel="stylesheet" type="text/css" href="estilo.css">
+
+</head>
+<body>
+   <div id="imprimir">
+  <input type="text" id="input-info1">
+  <input type="text" id="input-info2">
+  <input type="text" id="input-info3">
+  <input type="text" id="input-info4">
+  <input type="text" id="input-info5">
+   </div>
+  <select id="info-select"></select>
+  <button onclick="exibirInformacoes()">Exibir Informações</button>
+  <button onclick="editarInformacao()">Editar</button>
+  <button onclick="excluirInformacao()">Excluir</button>
+  <button onclick="mostrarTodasInformacoes()">Mostrar</button>
+  <button onclick="imprimirInformacoes()">Imprimir</button>
+  <p id="informacoes"></p>
+
+  <script>
+  var informacoesArray = [];
+
+    function exibirInformacoes() {
+      var inputs = [
+        document.getElementById("input-info1"),
+        document.getElementById("input-info2"),
+        document.getElementById("input-info3"),
+        document.getElementById("input-info4"),
+        document.getElementById("input-info5")
+      ];
+
+      var informacoes = {};
+
+      for (var i = 0; i < inputs.length; i++) {
+        informacoes["info" + (i + 1)] = inputs[i].value;
+        inputs[i].value = "";
+      }
+
+      informacoesArray.push(informacoes);
+
+      var select = document.getElementById("info-select");
+      var option = document.createElement("option");
+      option.text = "Informação " + informacoesArray.length;
+      select.add(option);
+    }
+
+    function editarInformacao() {
+      var select = document.getElementById("info-select");
+      var selectedIndex = select.selectedIndex;
+
+      if (selectedIndex !== -1) {
+        var info = informacoesArray[selectedIndex];
+        var inputs = [
+          document.getElementById("input-info1"),
+          document.getElementById("input-info2"),
+          document.getElementById("input-info3"),
+          document.getElementById("input-info4"),
+          document.getElementById("input-info5")
+        ];
+
+        for (var i = 0; i < inputs.length; i++) {
+          inputs[i].value = info["info" + (i + 1)];
+        }
+      }
+    }
+
+    function excluirInformacao() {
+      var select = document.getElementById("info-select");
+      var selectedIndex = select.selectedIndex;
+
+      if (selectedIndex !== -1) {
+        informacoesArray.splice(selectedIndex, 1);
+        select.remove(selectedIndex);
+      }
+    }
+
+    function exibirInformacaoSelecionada() {
+      var select = document.getElementById("info-select");
+      var selectedIndex = select.selectedIndex;
+      var informacoes = document.getElementById("informacoes");
+
+      if (selectedIndex !== -1) {
+        var info = informacoesArray[selectedIndex];
+        var infoString = "";
+
+        for (var key in info) {
+          if (info.hasOwnProperty(key)) {
+            infoString += key + ": " + info[key] + "<br>";
+          }
+        }
+
+        informacoes.innerHTML = infoString;
+      }
+    }
+
+    function mostrarTodasInformacoes() {
+      var informacoes = document.getElementById("informacoes");
+      var allInfoString = "";
+
+      for (var i = 0; i < informacoesArray.length; i++) {
+        var info = informacoesArray[i];
+        
+        for (var key in info) {
+          if (info.hasOwnProperty(key)) {
+            allInfoString += key + ": " + info[key] + "<br>";
+          }
+        }
+        
+        allInfoString += "<br>";
+      }
+      
+      informacoes.innerHTML = allInfoString;
+    }
+
+function imprimirInformacoes() {
+        var doc = new jsPDF();
+        var cpf = document.getElementById("input-info1").value;
+        doc.text("Certidão Negativa de Débitos municipais", 10, 10);
+        doc.text("CPF: " + cpf, 10, 20);
+        doc.save("certidao_negativa.pdf");
+      }
+  </script>
+</body>
+</html>
