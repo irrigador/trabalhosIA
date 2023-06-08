@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Exemplo de Compilador</title>
+  <script>
+    function lexer(input) {
+      const tokens = [];
+      let current = 0;
+
+      while (current < input.length) {
+        let char = input[current];
+
+        if (/\s/.test(char)) {
+          current++;
+          continue;
+        }
+
+        if (/[0-9]/.test(char)) {
+          let value = '';
+          while (/[0-9]/.test(char)) {
+            value += char;
+            char = input[++current];
+          }
+          tokens.push({ type: 'number', value });
+          continue;
+        }
+
+        if (/[+\-*/]/.test(char)) {
+          tokens.push({ type: 'operator', value: char });
+          current++;
+          continue;
+        }
+
+        if (/[a-zA-Z]/.test(char)) {
+          let value = '';
+          while (/[a-zA-Z]/.test(char)) {
+            value += char;
+            char = input[++current];
+            if (current >= input.length) break;
+          }
+          tokens.push({ type: 'letter', value });
+          continue;
+        }
+
+        throw new TypeError('Caractere não reconhecido: ' + char);
+      }
+
+      return tokens;
+    }
+
+    function parser(tokens) {
+      let current = 0;
+
+      function walk() {
+        let token = tokens[current];
+
+        if (token.type === 'number') {
+          current++;
+          return { type: 'NumberLiteral', value: token.value };
+        }
+
+        if (token.type === 'operator') {
+          current++;
+
+          let left = {
+            type: 'NumberLiteral',
+            value: tokens[current - 1].value
+          };
+
+          let right = walk();
+
+          return {
+            type: 'BinaryExpression',
+            operator: token.value,
+            left,
+            right
+          };
+        }
+
+        if (token.type === 'letter') {
+          current++;
+          return { type: 'LetterLiteral', value: token.value };
+        }
+
+        throw new TypeError('Tipo de token inválido: ' + token.type);
+      }
+
+      let ast = {
+        type: 'Program',
+        body: []
+      };
+
+      while (current < tokens.length) {
+        ast.body.push(walk());
+      }
+
+      return ast;
+    }
+
+    function compiler(input) {
+      const tokens = lexer(input);
+      const ast = parser(tokens);
+
+      return ast;
+    }
+
+    function runCompiler() {
+      const input = document.getElementById('input').value;
+      const ast = compiler(input);
+      const output = JSON.stringify(ast, null, 2);
+
+      document.getElementById('output').textContent = output;
+    }
+  </script>
+</head>
+<body>
+  <h1>Exemplo de Compilador</h1>
+  <label for="input">Entrada:</label>
+  <input type="text" id="input">
+  <button onclick="runCompiler()">Executar Compilador</button>
+  <pre id="output"></pre>
+</body>
+</html>
