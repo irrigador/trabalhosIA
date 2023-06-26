@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Venda</title>
+  <script src="script.js"></script>
+</head>
+<body>
+  <h1>Venda</h1>
+  <button onclick="existe()">Existe</button>
+  <button onclick="incluir()">Incluir</button>
+  <button onclick="remover()">Remover</button>
+  <button onclick="atualizar()">Atualizar</button>
+  <button onclick="salvar()">Salvar</button>
+  <script>
+    // Função Existe
+    function existe() {
+      // Implementação da lógica para verificar se a venda existe
+      // ...
+
+      console.log("Existe");
+    }
+
+    // Função Incluir
+    function incluir() {
+      var v = {
+        CodVenda: 1,
+        ListaRoupas: [10.0, 20.0, 30.0],
+        ValorVendaTotal: 100.0,
+        dataVenda: new Date(),
+        qtdDesconto: 2
+      };
+      var item = 40.0;
+      var quantidade = 3;
+
+      var v_ = {
+        CodVenda: v.CodVenda,
+        ListaRoupas: v.ListaRoupas.concat([item]),
+        ValorVendaTotal: v.ValorVendaTotal + (item * quantidade),
+        dataVenda: v.dataVenda,
+        qtdDesconto: v.qtdDesconto
+      };
+
+      console.log("Venda incluída:", v_);
+    }
+
+    // Função Remover
+    function remover() {
+      var v = {
+        CodVenda: 1,
+        ListaRoupas: [10.0, 20.0, 30.0],
+        ValorVendaTotal: 100.0,
+        dataVenda: new Date(),
+        qtdDesconto: 2
+      };
+      var item = 20.0;
+      var quantidade = 1;
+
+      var v_ = {
+        CodVenda: v.CodVenda,
+        ListaRoupas: v.ListaRoupas.filter(function(element) {
+          return element !== item;
+        }),
+        ValorVendaTotal: v.ValorVendaTotal - (item * quantidade),
+        dataVenda: v.dataVenda,
+        qtdDesconto: v.qtdDesconto
+      };
+
+      console.log("Venda atualizada:", v_);
+    }
+
+    // Função Atualizar
+    function atualizar() {
+      var v = {
+        CodVenda: 1,
+        ListaRoupas: [10.0, 20.0, 30.0],
+        ValorVendaTotal: 100.0,
+        dataVenda: new Date(),
+        qtdDesconto: 2
+      };
+      var item = 20.0;
+      var quantidade = 1;
+
+      var v_ = {
+        CodVenda: v.CodVenda,
+        ListaRoupas: v.ListaRoupas.filter(function(element) {
+          return element !== item;
+        }).concat([item]),
+        ValorVendaTotal: v.ValorVendaTotal - (item * quantidade) + (item * quantidade),
+        dataVenda: v.dataVenda,
+        qtdDesconto: v.qtdDesconto
+      };
+
+      console.log("Venda atualizada:", v_);
+    }
+
+    // Função Salvar
+    function salvar() {
+      // Implementação da lógica para salvar a venda
+      // ...
+
+      console.log("Salvar");
+    }
+  </script>
+</body>
+</html>
